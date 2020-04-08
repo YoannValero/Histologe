@@ -11,7 +11,7 @@ import { HttpClient } from "@angular/common/http";
 export class SignaleComponent implements OnInit {
 
     postData = {
-        nom:'test',
+        nom:'test2',
         description:'test',
         prix:10,
         categories_id:5
