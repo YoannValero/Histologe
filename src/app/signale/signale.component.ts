@@ -53,4 +53,10 @@ export class SignaleComponent implements OnInit {
     onTextChange(input) {
         //console.log(input);
     }
+    /**
+     * Toggle pour montrer/cacher les différents types de signalement
+     */
+    show() {
+
+    }
 }

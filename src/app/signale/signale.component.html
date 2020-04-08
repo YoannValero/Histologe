@@ -16,9 +16,62 @@
 </ActionBar>
 
 <StackLayout>
-    <TextField #name (textChange)="onTextChange(name.text)" hint='nom'></TextField>
-    <TextField #description (textChange)="onTextChange(description.text)" hint='description'></TextField>
-    <TextField #prix (textChange)="onTextChange(prix.text)" hint='prix'></TextField>
-    <TextField #categories_id (textChange)="onTextChange(categories_id.text)" hint='categories_id'></TextField>
-    <Button (tap)='submitForm()' text='Envoyer' class='-active'></Button>
-<StackLayout>
+    <ScrollView>
+    <Label class='text-center' text='Votre signalement en 3 étapes'></Label>
+    <Tabs height='600'>
+        <Tabstrip>
+            <TabStripItem class='tabsStripItemPrincipal'>
+                <Label text='Situation'></Label>
+            </TabStripItem>
+            <TabStripItem class='tabsStripItemPrincipal'>
+                <Label text='Informations'></Label>
+            </TabStripItem >
+            <TabStripItem class='tabsStripItemPrincipal'>
+                <Label text='Validation'></Label>
+            </TabStripItem>
+        </Tabstrip>
+
+        <TabContentItem>
+            <ScrollView>
+                <StackLayout>
+                    <Label class='text-center title' text="Situation"></Label>
+                    <Label text="Sélectionner l'endroit qui concerne votre signalement"></Label>
+                    <FlexBox>
+                        <Button (tap)='show()' text='Extérieur'></Button>
+                        <Button text='Parties communes'></Button>
+                        <Button text='Logement'></Button>
+                    </FlexBox>
+                    <!-- Formulaires -->
+
+                    <TextField #name (textChange)="onTextChange(name.text)" hint='nom'></TextField>
+                    <TextField #description (textChange)="onTextChange(description.text)" hint='description'></TextField>
+                    <TextField #prix (textChange)="onTextChange(prix.text)" hint='prix'></TextField>
+                    <TextField #categories_id (textChange)="onTextChange(categories_id.text)" hint='categories_id'></TextField>
+                </StackLayout>
+            </ScrollView>
+        </TabContentItem>
+
+        <TabContentItem>
+            <StackLayout>
+                <Label text='content home'></Label>
+            </StackLayout>
+        </TabContentItem>
+
+        <TabContentItem>
+            <StackLayout height='200'>
+                <FlexBox  style='background:red;' justifyContent='center' alignItems='center'>
+                    <Label text="J'ai bien pris connaissances des CGU"></Label>
+                    <Switch></Switch>
+                </FlexBox>
+            <Button (tap)='submitForm()' text='Envoyer' class='submitButton'></Button>
+            </StackLayout>
+        </TabContentItem>
+    </Tabs>
+    </ScrollView>
+</StackLayout>
+
+
+
+
+
+
