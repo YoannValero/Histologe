@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { HttpClient } from "@angular/common/http";
+import { EventData } from "tns-core-modules/ui/page/page";
+import { Button } from "tns-core-modules/ui/button";
+
 
 @Component({
     selector: "Signale",
@@ -28,23 +31,23 @@ export class SignaleComponent implements OnInit {
         sideDrawer.showDrawer();
     }
     /**
-     * Requête POST / soumissions du formulaire 
+     * Requête POST / soumissions du formulaire
      */
     submitForm() {
-        let name = { nom: this.name.nativeElement.text };
-        let description = {description: this.description.nativeElement.text };
-        let prix = { prix: this.prix.nativeElement.text };
-        let categories_id = {categories_id: this.categories_id.nativeElement.text };
 
-        var obj = Object.assign(name, description, prix, categories_id);
-
-        this.http.post("http://yoannvalero.ovh/produits/creer.php", obj).toPromise().then ( (data) => {
+        let postData = {
+            nom: this.name.nativeElement.text,
+            description: this.description.nativeElement.text,
+            prix: this.prix.nativeElement.text,
+            categories_id: this.categories_id.nativeElement.text
+        }
+        this.http.post("http://yoannvalero.ovh/produits/creer.php", postData).toPromise().then ( (data) => {
             console.log(data);
         })
     }
     /**
      * Ecoute les changements de valeurs des champs Imput
-     * exemple dans signale.component.html: <TextField #name (textChange)="onTextChange(name.text)" hint='nom'></TextField>
+     * Exemple dans signale.component.html: <TextField #name (textChange)="onTextChange(name.text)"></TextField>
      * @param input
      */
     onTextChange(input) {

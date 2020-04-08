@@ -20,5 +20,6 @@
     <TextField #description (textChange)="onTextChange(description.text)" hint='description'></TextField>
     <TextField #prix (textChange)="onTextChange(prix.text)" hint='prix'></TextField>
     <TextField #categories_id (textChange)="onTextChange(categories_id.text)" hint='categories_id'></TextField>
-    <Button (tap)='submitForm()' text='Envoyer'></Button>
+    <Button (tap)='submitForm()' text='Envoyer' class='-active'></Button>
+    <Button text='&#xf178;'></Button>
 <StackLayout>
