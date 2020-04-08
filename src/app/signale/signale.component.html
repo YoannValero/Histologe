@@ -16,6 +16,9 @@
 </ActionBar>
 
 <StackLayout>
-    <TextField hint='nom'></TextField>
+    <TextField #name (textChange)="onTextChange(name.text)" hint='nom'></TextField>
+    <TextField #description (textChange)="onTextChange(description.text)" hint='description'></TextField>
+    <TextField #prix (textChange)="onTextChange(prix.text)" hint='prix'></TextField>
+    <TextField #categories_id (textChange)="onTextChange(categories_id.text)" hint='categories_id'></TextField>
     <Button (tap)='submitForm()' text='Envoyer'></Button>
 <StackLayout>
