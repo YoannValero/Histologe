@@ -1,0 +1,34 @@
+<ActionBar>
+    <!--
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!--
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label text="Search"></Label>
+</ActionBar>
+
+<RadDataForm [source]="_signal" tkExampleTitle tkToggleNavButton>
+    <TKEntityProperty tkDataFormProperty name="name" displayName="Name" index="0"></TKEntityProperty>
+    <TKEntityProperty tkDataFormProperty hintText="age" name="age" displayName="Age" index="1">
+        <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
+    </TKEntityProperty>
+    <TKEntityProperty tkDataFormProperty name="email" displayName="E-Mail" index="2">
+        <TKPropertyEditor tkEntityPropertyEditor type="Email"></TKPropertyEditor>
+    </TKEntityProperty>
+    <TKEntityProperty tkDataFormProperty name="city" displayName="City" index="3" valuesProvider="New York, Washington, Los Angeles">
+        <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
+    </TKEntityProperty>
+    <TKEntityProperty tkDataFormProperty name="street" displayName="Street Name" index="4"></TKEntityProperty>
+    <TKEntityProperty tkDataFormProperty name="streetNumber" displayName="Street Number" index="5">
+        <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
+    </TKEntityProperty>
+</RadDataForm>
+

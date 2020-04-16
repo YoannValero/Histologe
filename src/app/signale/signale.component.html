@@ -15,60 +15,71 @@
     <Label text="Signaler un problème"></Label>
 </ActionBar>
 
-<StackLayout>
-    <ScrollView>
+
+<ScrollView>
     <Label class='text-center' text='Votre signalement en 3 étapes'></Label>
-    <Tabs height='600'>
+    <Tabs height='700'>
+        <!-- Navigation -->
         <Tabstrip>
-            <TabStripItem class='tabsStripItemPrincipal'>
+            <TabStripItem>
                 <Label text='Situation'></Label>
             </TabStripItem>
-            <TabStripItem class='tabsStripItemPrincipal'>
+            <TabStripItem>
                 <Label text='Informations'></Label>
             </TabStripItem >
-            <TabStripItem class='tabsStripItemPrincipal'>
+            <TabStripItem>
                 <Label text='Validation'></Label>
             </TabStripItem>
         </Tabstrip>
 
+        <!-- 1ère partie du formulaire-->
         <TabContentItem>
             <ScrollView>
-                <StackLayout>
+                <StackLayout id='situationSection'>
                     <Label class='text-center title' text="Situation"></Label>
-                    <Label text="Sélectionner l'endroit qui concerne votre signalement"></Label>
-                    <FlexBox>
-                        <Button (tap)='show()' text='Extérieur'></Button>
-                        <Button text='Parties communes'></Button>
-                        <Button text='Logement'></Button>
-                    </FlexBox>
-                    <!-- Formulaires -->
+                    <Label class='quest' textWrap='true' text="Sélectionner l'endroit qui concerne votre signalement"></Label>
 
-                    <TextField #name (textChange)="onTextChange(name.text)" hint='nom'></TextField>
-                    <TextField #description (textChange)="onTextChange(description.text)" hint='description'></TextField>
-                    <TextField #prix (textChange)="onTextChange(prix.text)" hint='prix'></TextField>
-                    <TextField #categories_id (textChange)="onTextChange(categories_id.text)" hint='categories_id'></TextField>
+                    <Button class='tabsButton' (tap)='showHide()' text='Extérieur'></Button>
+                    <Button class='tabsButton' (tap)='showHide()' text='Parties communes'></Button>
+                    <Button class='tabsButton' (tap)='showHide()' text='Logement'></Button>
+
+                    <Label class='quest' textWrap='true' text='Décrivez le ou les problèmes rencontrés'></Label>
+                    <TextField></TextField>
+                    <Label class='quest' textWrap='true' text='Prendre ou télécharger des photos des problèmes'></Label>
+
+                    <Button text="Choisir un fichier" (tap)="OpenCamera()"></Button>
+                    <Button class='nextBtn fas' (tap)='nextStep()' text='&#xf0a9;'></Button>
                 </StackLayout>
             </ScrollView>
         </TabContentItem>
 
+        <!-- 2ème partie du formulaire -->
         <TabContentItem>
             <StackLayout>
-                <Label text='content home'></Label>
-            </StackLayout>
-        </TabContentItem>
+                 <TextField [(ngModel)] = "myPostService.formData.nom" keyboardType='email' #courriel autocapitalizeType="none" (textChange)="onTextChange(courriel.text)" hint='Email'></TextField>
+                 <TextField #telephone (textChange)="onTextChange(telephone.text)" hint='Telephone'></TextField>
+                 <TextField #description (textChange)="onTextChange(description.text)" hint='Description'></TextField>
+                 <TextField #proprio_info (textChange)="onTextChange(proprio_info.text)" hint='bool'></TextField>
+                 <TextField #anne_construct (textChange)="onTextChange(anne_construct.text)" hint='Année de construction du logement'></TextField>
+                 <TextField #idAdresse (textChange)="onTextChange(idAdresse.text)" hint='Adresse'></TextField>
 
-        <TabContentItem>
-            <StackLayout height='200'>
-                <FlexBox  style='background:red;' justifyContent='center' alignItems='center'>
-                    <Label text="J'ai bien pris connaissances des CGU"></Label>
-                    <Switch></Switch>
-                </FlexBox>
-            <Button (tap)='submitForm()' text='Envoyer' class='submitButton'></Button>
+                </StackLayout>
+            </TabContentItem>
+
+            <!-- 3ème partie du formulaire -->
+            <TabContentItem>
+                <StackLayout>
+                    <Flexbox id='flex'>
+                        <Label class='quest' text="J'ai bien pris connaissance des CGU"></Label>
+                        <Switch></Switch>
+                    </Flexbox>
+                    <Label class='quest' textWrap="true" text="Pour finaliser votre signalement veuillez cliquez sur Envoyer"></Label>
+                    <Button (tap)='makePostRequest()' text='Envoyer' class='submitButton'></Button>
             </StackLayout>
         </TabContentItem>
     </Tabs>
-    </ScrollView>
-</StackLayout>
+</ScrollView>
+
 
 
 

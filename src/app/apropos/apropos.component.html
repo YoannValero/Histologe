@@ -1,10 +1,10 @@
 <ActionBar>
-    <!-- 
+    <!--
     Use the NavigationButton as a side-drawer button in Android
     because ActionItems are shown on the right side of the ActionBar
     -->
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!-- 
+    <!--
     Use the ActionItem for IOS with position set to left. Using the
     NavigationButton as a side-drawer button in iOS is not possible,
     because its function is to always navigate back in the application.
@@ -12,10 +12,12 @@
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label text="Search"></Label>
+    <Label text="Qui sommes-nous ?"></Label>
 </ActionBar>
 
 <GridLayout class="page__content">
-    <Label class="page__content-icon fas" text="&#xf002;"></Label>
-    <Label class="page__content-placeholder" text="<!-- Page content goes here -->"></Label>
+
+    <Label class="page__content-placeholder" text="Histologe est un service public permettant de faciliter la détection, le signalement, l’évaluation, l’envoi d’alertes et le suivi des logements pour accélérer la prise en charge du “mal logement”.
+    Histologe est une start-up d’Etat portée par le dispositif Beta.gouv.fr. Cet outil est actuellement expérimenté par la communauté d’agglomération Pau Béarn Pyrénées. Les signalements peuvent être enregistrés uniquement sur son territoire administratif.
+    "></Label>
 </GridLayout>
