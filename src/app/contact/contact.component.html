@@ -12,10 +12,20 @@
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label text="Search"></Label>
+    <Label text="Contact"></Label>
 </ActionBar>
+<StackLayout class='bg-1'>
+    <Label class='txt-1' style='font-size:25;' text="Une question, une précision ? N’hésitez pas à nous envoyer un message !" textWrap="true"></Label>
+    <Label class='txt-1' text="Votre email" style="margin-top: 20;" textWrap="true"></Label>
+    <TextField [(ngModel)]="myPostService.contact.email" hint='email@gmail.com'></TextField>
+    <Label class='txt-1'text="Votre sujet" textWrap="true"></Label>
+    <TextField [(ngModel)]="myPostService.contact.sujet" hint='Sujet'></TextField>
+    <Label class='txt-1'text="Votre message" textWrap="true"></Label>
+    <TextView  [(ngModel)]="myPostService.contact.message" lineHeight="300" hint ="contenu de votre message"></TextView>
 
-<RadDataForm [source]="_signal" tkExampleTitle tkToggleNavButton>
+    <Button class='-primary -rounded-sm' text='Envoyer' (tap)='postContact()'></Button>
+</StackLayout>
+<!-- <RadDataForm [source]="_signal" tkExampleTitle tkToggleNavButton>
     <TKEntityProperty tkDataFormProperty name="name" displayName="Name" index="0"></TKEntityProperty>
     <TKEntityProperty tkDataFormProperty hintText="age" name="age" displayName="Age" index="1">
         <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
@@ -30,5 +40,5 @@
     <TKEntityProperty tkDataFormProperty name="streetNumber" displayName="Street Number" index="5">
         <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
     </TKEntityProperty>
-</RadDataForm>
+</RadDataForm> -->
 

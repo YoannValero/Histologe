@@ -1,12 +1,15 @@
 import { ModelHabitant} from "./HabitantInterface";
 
-export interface ModelSignal {
-    criteres: string,
-    descriptionProb :string,
-    img: string,
-    proprietaire_informe:boolean,
-    habitant_adulte:number,
-    habitant_enfant?:number,
-    surface_logement:string,
-    habitant: ModelHabitant
+
+export class ModelSignal {
+
+    criteres :Array<any>= [];
+    descriptionProb : string;
+    img: Array<any> = [];
+    proprietaire_informe?: boolean;
+    habitant_adulte?: number;
+    habitant_enfant?: number;
+    surface_logement :string;
+    habitant: ModelHabitant = new ModelHabitant();
+
 }

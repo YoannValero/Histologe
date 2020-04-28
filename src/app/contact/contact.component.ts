@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { Signal } from "../modeles/Signal";
+import { HttpClient } from "@angular/common/http";
+import { MyHttpPostService } from "../services/http-post.service";
+
 
 @Component({
     selector: "Contact",
@@ -9,22 +11,26 @@ import { Signal } from "../modeles/Signal";
 })
 export class ContactComponent implements OnInit {
 
-    private _signal: Signal;
-
-    constructor() {
+    constructor(public http : HttpClient, public myPostService: MyHttpPostService) {
         // Use the component constructor to inject providers.
     }
 
     ngOnInit(): void {
         // Init your component properties here.
-        this._signal = new Signal("John", 18, "john@company.com", "New York", "5th Avenue", 11);
     }
 
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
-    get person(): Signal {
-        return this._signal;
+    postContact() {
+        // this.sign.push(this.myPostService.signalement);
+        // console.log(this.sign);
+
+        this.myPostService
+            .postData(this.myPostService.contact)
+            .toPromise().then( (data) => {
+                console.log("Réponse du serveur : \n" + JSON.stringify(data));
+            })
     }
 }

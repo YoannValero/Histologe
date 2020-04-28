@@ -1,8 +1,36 @@
 @import "~@nativescript/theme/core";
-@import "~@nativescript/theme/forest";
+@import "~@nativescript/theme/default";
 
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
+
+ActionBar{
+    background: rgb(146, 144, 144);
+    Label {
+        font-size:20;
+        color:white;
+    }
+}
+.user {
+    background: rgb(146, 144, 144);
+    height:200;
+    width:100%;
+    .idt {
+        color:white;
+        padding-left:40;
+        padding-top:10;
+        font-size:16;
+    }
+}
+.bg-1 {
+    background:rgb(238, 238, 238);
+}
+.txt-1 {
+    color:rgb(102, 102, 102);
+}
+.imgProfil {
+    margin-top:30;
+}
 
 // Font icon class
 .fab {
@@ -24,8 +52,8 @@
 .page__content {
     &-icon,
     &-placeholder {
-        color: const(grey);
-        font-size: 20;
+        color: const(rgb(134, 134, 134));
+        font-size: 40;
         vertical-align: center;
         horizontal-align: center;
     }
@@ -39,25 +67,49 @@
 
 // Drawer navigation custom styles
 .nt-drawer__header-image {
-    color: const(grey);
+    color: const(white);
 }
 
 Button {
-    background:rgb(31, 116, 111)
+    color:white;
+    // background:grey;
 }
 
 TextField {
     font-size:20;
     margin:10;
     border-radius:10;
-    background:rgb(238, 238, 238);
+    background:rgb(212, 212, 212);
+}
+TextView {
+    font-size:20;
+    border-radius:10;
+    background:rgb(212, 212, 212);
+    color: black;
 }
 
-TextField[hint] {
+TextField[hint], TextView[hint]  {
     padding-left:10;
+    // color:const(white);
 }
 
 Label{
-    padding-left:10;
+    padding-left:15;
 }
 
+.navItem {
+    font-size:18;
+}
+.ng-valid[required] {
+    border-left-color: #42A948;
+    border-left-width: 3;
+}
+
+.ng-invalid {
+    border-left-color: #a94442;
+    border-left-width: 3;
+}
+.validation {
+    background-color: #a94442;
+    color: #ffffff;
+}

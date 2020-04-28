@@ -1,14 +1,9 @@
-export interface ModelHabitant {
-    nom:string,
-    prenom:string,
-    email:string,
-    tel:number,
-    adresse: {
-        numero:number;
-        rue:string,
-        etage?:string,
-        num_appart?:string,
-        code_postal:number,
-        ville:string
-    }
+import { ModelAdresseHabitant} from "./HabitantAdresseInterface";
+
+export class ModelHabitant {
+    nom:string;
+    prenom:string;
+    email:string;
+    tel?:number;
+    adresse :ModelAdresseHabitant = new ModelAdresseHabitant();
 }

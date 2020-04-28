@@ -12,12 +12,18 @@
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label text="Qui sommes-nous ?"></Label>
+    <Label class='navbar' text="Qui sommes-nous ?"></Label>
 </ActionBar>
-
-<GridLayout class="page__content">
-
-    <Label class="page__content-placeholder" text="Histologe est un service public permettant de faciliter la détection, le signalement, l’évaluation, l’envoi d’alertes et le suivi des logements pour accélérer la prise en charge du “mal logement”.
-    Histologe est une start-up d’Etat portée par le dispositif Beta.gouv.fr. Cet outil est actuellement expérimenté par la communauté d’agglomération Pau Béarn Pyrénées. Les signalements peuvent être enregistrés uniquement sur son territoire administratif.
-    "></Label>
-</GridLayout>
+<ScrollView>
+    <StackLayout class="container">
+        <Label class='title' textWrap="true" text="Histologe, le bien de votre logement" ></Label>
+        <Label class='texteApropos' textWrap="true" text="Histologe est un service public permettant de faciliter la détection, le signalement, l’évaluation, l’envoi d’alertes et le suivi des logements pour accélérer la prise en charge du “mal logement”. Histologe est une start-up d’Etat portée par le dispositif Beta.gouv.fr. Cet outil est actuellement expérimenté par la communauté d’agglomération Pau Béarn Pyrénées. Les signalements peuvent être enregistrés uniquement sur son territoire administratif.
+        "></Label>
+        <StackLayout class='hr'></StackLayout>
+        <Label class='title' textWrap="true" text="Qu’est-ce qu’une « Startup d’État » ?"></Label>
+        <Label class='texteApropos' textWrap='true' text="Il s’agit d’une petite équipe qui crée un service public numérique pour répondre à un problème qui touche les citoyens. Elle n’a pas pour objectif de faire du profit, mais de maximiser son impact social en répondant aux besoins des utilisateurs."></Label>
+        <StackLayout class='hr'></StackLayout>
+        <Label class='title' textWrap="true" text="Nos partenaires de confiance :"></Label>
+        <Image src="res://famille" loadMode="async" stretch="aspectFit"></Image>
+    </StackLayout>
+</ScrollView>

@@ -3,4 +3,8 @@ import { platformNativeScriptDynamic } from "nativescript-angular/platform";
 
 import { AppModule } from "./app/app.module";
 
+// Définition du thème
+import Theme from "@nativescript/theme";
+Theme.setMode(Theme.Light);
+
 platformNativeScriptDynamic().bootstrapModule(AppModule);

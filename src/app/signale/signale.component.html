@@ -1,83 +1,139 @@
 <ActionBar>
-    <!--
-    Use the NavigationButton as a side-drawer button in Android
-    because ActionItems are shown on the right side of the ActionBar
-    -->
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!--
-    Use the ActionItem for IOS with position set to left. Using the
-    NavigationButton as a side-drawer button in iOS is not possible,
-    because its function is to always navigate back in the application.
-    -->
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
     <Label text="Signaler un problème"></Label>
 </ActionBar>
 
-
 <ScrollView>
-    <Label class='text-center' text='Votre signalement en 3 étapes'></Label>
-    <Tabs height='700'>
-        <!-- Navigation -->
-        <Tabstrip>
-            <TabStripItem>
-                <Label text='Situation'></Label>
-            </TabStripItem>
-            <TabStripItem>
-                <Label text='Informations'></Label>
-            </TabStripItem >
-            <TabStripItem>
-                <Label text='Validation'></Label>
-            </TabStripItem>
-        </Tabstrip>
+        <Tabs height='100%'>
+            <!-- Navigation -->
+            <Tabstrip>
+                <TabStripItem>
+                    <Label text='Situation'></Label>
+                </TabStripItem>
+                <TabStripItem>
+                    <Label text='Informations'></Label>
+                </TabStripItem >
+                <TabStripItem>
+                    <Label text='Validation'></Label>
+                </TabStripItem>
+            </Tabstrip>
 
-        <!-- 1ère partie du formulaire-->
-        <TabContentItem>
-            <ScrollView>
-                <StackLayout id='situationSection'>
-                    <Label class='text-center title' text="Situation"></Label>
-                    <Label class='quest' textWrap='true' text="Sélectionner l'endroit qui concerne votre signalement"></Label>
+            <!-- ########## 1ère partie du formulaire ##############-->
+            <TabContentItem class='sign'>
+                <ScrollView>
+                    <StackLayout class='section'>
+                        <Label class='text-center title' text="Situation"></Label>
+                        <Label class='quest' textWrap='true' text="Sélectionner l'endroit qui concerne votre signalement"></Label>
 
-                    <Button class='tabsButton' (tap)='showHide()' text='Extérieur'></Button>
-                    <Button class='tabsButton' (tap)='showHide()' text='Parties communes'></Button>
-                    <Button class='tabsButton' (tap)='showHide()' text='Logement'></Button>
+                        <FlexBoxLayout class='test' flexDirection="row">
+                            <StackLayout *ngFor="let item of listSituations">
+                                <Button textWrap='true' class='situationBtn -primary fas' [text]="item.libSituation + '\n\n&#xf002;'" (tap)="getCritere(item.idSituation_pb, item.questSituation) "></Button>
+                            </StackLayout>
+                        </FlexBoxLayout>
 
-                    <Label class='quest' textWrap='true' text='Décrivez le ou les problèmes rencontrés'></Label>
-                    <TextField></TextField>
-                    <Label class='quest' textWrap='true' text='Prendre ou télécharger des photos des problèmes'></Label>
+                        <!-- Error Expression Changed After it has been Checked Switch -->
+                        <Label style='margin-bottom:30;' class='questSituation' textWrap='true' [text]="questSituation"></Label>
+                                <GridLayout *ngFor="let item of listCriteres$" >
+                                    <Label style="width:250" textWrap="true" class="quest pull-left" [text]="item.libCritere"></Label>
+                                    <Switch [checked]="verifChecked(item.idCritere)" offBackgroundColor='black' (checkedChange)="onCheckedChange($event, item)"></Switch>
+                                    <StackLayout style='margin-top:65' class='hr'></StackLayout>
+                                </GridLayout>
 
-                    <Button text="Choisir un fichier" (tap)="OpenCamera()"></Button>
-                    <Button class='nextBtn fas' (tap)='nextStep()' text='&#xf0a9;'></Button>
-                </StackLayout>
-            </ScrollView>
-        </TabContentItem>
+                        <Label class='title' textWrap='true' text='Problème que vous avez sélectionné'></Label>
+                        <StackLayout class='hr'></StackLayout>
+                            <Label textWrap='true' style='color:rgb(102,102,102);' class="navItem font-weight-bold fas" *ngFor="let item of arrayCriteresChecked" [text]="'- &#xf071; ' + item"></Label>
+                        <StackLayout class='hr'></StackLayout>
 
-        <!-- 2ème partie du formulaire -->
-        <TabContentItem>
-            <StackLayout>
-                 <TextField [(ngModel)] = "myPostService.formData.nom" keyboardType='email' #courriel autocapitalizeType="none" (textChange)="onTextChange(courriel.text)" hint='Email'></TextField>
-                 <TextField #telephone (textChange)="onTextChange(telephone.text)" hint='Telephone'></TextField>
-                 <TextField #description (textChange)="onTextChange(description.text)" hint='Description'></TextField>
-                 <TextField #proprio_info (textChange)="onTextChange(proprio_info.text)" hint='bool'></TextField>
-                 <TextField #anne_construct (textChange)="onTextChange(anne_construct.text)" hint='Année de construction du logement'></TextField>
-                 <TextField #idAdresse (textChange)="onTextChange(idAdresse.text)" hint='Adresse'></TextField>
+                        <Label class='quest' textWrap='true' text='Décrivez le ou les problèmes rencontrés'></Label>
+                        <TextView [(ngModel)]="myPostService.signalement.descriptionProb"  lineHeight="300" hint ="description des problèmes..."></TextView>
 
-                </StackLayout>
+                        <Label class='title' textWrap='true' text='Prendre ou télécharger des photos des problèmes (6 fichiers maximum)*'></Label>
+                        <Button class='-primary' text="console.log" (tap)="testLog()"></Button>
+
+                        <FlexBoxLayout class='test' flexDirection="row">
+                            <Button class='situationBtn -primary fal' text="&#xf030;" (tap)="onTakePictureTap($event) "></Button>
+                            <Button class='situationBtn -primary fal' text="&#xf093;" (tap)="selectPicture() "></Button>
+                        </FlexBoxLayout>
+
+                        <Button class='-primary' text="Upload fichier" (tap)="upload() "></Button>
+                        <Image style="width:250;height:250" *ngFor="let item of myPostService.signalement.img" [src]="item" stretch="aspectFit" margin="10"></Image>
+                        <Image style="width:250;height:250" *ngFor="let item of images" [src]="item" stretch="aspectFit" margin="10"></Image>
+
+                        <Button class='nextBtn fas' (tap)='nextStep()' text=' Etape suivante &#xf0a9;'></Button>
+                        <!-- <Button class='-primary' (tap)="showModal()"></Button> -->
+                    </StackLayout>
+                </ScrollView>
             </TabContentItem>
 
-            <!-- 3ème partie du formulaire -->
-            <TabContentItem>
-                <StackLayout>
-                    <Flexbox id='flex'>
-                        <Label class='quest' text="J'ai bien pris connaissance des CGU"></Label>
-                        <Switch></Switch>
-                    </Flexbox>
+            <!-- ################ 2ème partie du formulaire ################### -->
+            <TabContentItem class='sign'>
+                <ScrollView>
+                    <StackLayout class='section'>
+                        <Label class='text-center title' text="Informations Complémentaires"></Label>
+                        <Label class='quest' textWrap='true' text="Avez vous informé le propriétaire de ces nuisances ?*"></Label>
+                        <Switch [(ngModel)]="myPostService.signalement.proprietaire_informe"></Switch>
+                        <RadioGroup class='text-center' style='padding-left:30;'>
+                            <RadioButton class='radioBtn' style='font-size:20;' text="Oui"></RadioButton>
+                            <RadioButton class='radioBtn' style='font-size:20;' text="Non"></RadioButton>
+                        </RadioGroup>
+
+                        <Label textWrap='true' class='title' text="Qui Habite dans ce logement ?"></Label>
+
+                        <FlexBoxLayout style='background:lightgrey;border-radius:10;'  justifyContent='space-around' alignItems='center'>
+                            <Label textWrap='true' class='quest' style='width:180;' text="Nombre d'adultes* : "></Label>
+                            <ListPicker [(ngModel)]="myPostService.signalement.habitant_adulte" [items]="nbAdulte" class='picker' selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event, nbAdulte)"></ListPicker>
+                        </FlexBoxLayout>
+
+                        <FlexBoxLayout   justifyContent='space-around' alignItems='center'>
+                            <Label textWrap='true' class='quest' style='width:180;' text="Nombre d'enfant* : "></Label>
+                            <ListPicker [(ngModel)]="myPostService.signalement.habitant_enfant" [items]="nbEnfant"  class='picker' selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event, nbEnfant)"></ListPicker>
+                        </FlexBoxLayout>
+
+                        <FlexBoxLayout style='background:lightgrey;border-radius:10;' justifyContent='space-around' alignItems='center'>
+                             <Label textWrap='true' class='quest' style='width:180;' text="Surface estimée de votre logement* :	"></Label>
+                             <ListPicker #listPicker [(ngModel)]="myPostService.signalement.surface_logement" [items]="surface" class='picker' selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event, surface)"></ListPicker>
+                        </FlexBoxLayout>
+
+                        <!-- [(ngModel)] return l'index du listPicker et non la valeur a voir comment modifier si possible pas dérangeant pour nombre habitants
+                             Utilisation d'un TextField type number du coup pas top -->
+                        <!-- <Label class='quest' textWrap='true' text='Surface du logement en m²*'></Label>
+                        <TextField keyboardType='number' hint='50' [(ngModel)]="myPostService.signalement.surface_logement"></TextField> -->
+
+                        <Label class='title' text='Votre nom et prénom*'></Label>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.nom" hint='Nom'></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.prenom" hint='Prenom'></TextField>
+                        <Label class='title' text='Votre adresse courriel*'></Label>
+
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.email" keyboardType='email' #courriel autocapitalizeType="none" (textChange)="onTextChange(courriel.text)" hint='email@courriel.fr'></TextField>
+
+                        <Label class='title' textWrap='true' text='Téléphone Portable (Optionnel)'></Label>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.tel" keyboardType='phone' hint='0618786475'></TextField>
+
+                        <Label class='title' text='Adresse du logement'></Label>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.numero" keyboardType='number' hint='10'></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.rue" hint='Rue, Chemin, Place'></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.etage" hint='Etage' ></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.num_appart" keyboardType='number' hint='Code Postal'></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.code_postal" hint='Ville'></TextField>
+
+                        <Button class='nextBtn fas' (tap)='nextStep()' text=' Etape suivante &#xf0a9;'></Button>
+                    </StackLayout>
+                </ScrollView>
+            </TabContentItem>
+
+            <!-- ################# 3ème partie du formulaire ##################### -->
+            <TabContentItem class='sign'>
+                <StackLayout class='section'>
+                    <Label class='quest' text="J'ai bien pris connaissance des CGU"></Label>
+                    <Switch></Switch>
                     <Label class='quest' textWrap="true" text="Pour finaliser votre signalement veuillez cliquez sur Envoyer"></Label>
-                    <Button (tap)='makePostRequest()' text='Envoyer' class='submitButton'></Button>
+                    <Button (tap)='postSignalement()' text='Envoyer' class='-primary'></Button>
             </StackLayout>
-        </TabContentItem>
-    </Tabs>
+            </TabContentItem>
+        </Tabs>
 </ScrollView>
 
 

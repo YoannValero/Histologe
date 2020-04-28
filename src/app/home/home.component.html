@@ -1,21 +1,25 @@
 <ActionBar>
-    <!--
-    Use the NavigationButton as a side-drawer button in Android
-    because ActionItems are shown on the right side of the ActionBar
-    -->
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!--
-    Use the ActionItem for IOS with position set to left. Using the
-    NavigationButton as a side-drawer button in iOS is not possible,
-    because its function is to always navigate back in the application.
-    -->
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
     <Label text="Accueil"></Label>
 </ActionBar>
 
-<GridLayout class="page__content">
-    <Label class="page__content-icon fas" text="&#xf005;"></Label>
-    <Label class="page__content-placeholder" text="<!-- Page content goes here -->"></Label>
-</GridLayout>
+<StackLayout class="sign">
+        <StackLayout id='test' style="height:200;" verticalAlignment="center" horizontalAlignment="center" >
+            <Label class="title text-center" textWrap="true" text="Locataire, un problème dans ton logement ? Signale ''TOIT'' !"></Label>
+        </StackLayout>
+
+        <StackLayout id='etapes' verticalAlignment="center" horizontalAlignment="center">
+            <Label class='h3 etape' textWrap="true" text="1.  Vous rencontrez un problème dans votre logement en location à PAU."></Label>
+            <Label class='h3 etape' textWrap="true" text="2.  Vous renseignez les problèmes via notre formulaire de signalement."></Label>
+            <Label class='h3 etape' textWrap="true" text="3.  HISTOLOGE vous accompagne pour trouver une solution."></Label>
+        </StackLayout>
+
+        <StackLayout style="background: lightgray;height:250;" verticalAlignment="center">
+            <Button id="signalBtn" (tap)="redirectToSignale()" class='fas'  text="Signaler un problème &#xf071;"></Button>
+            <Label (tap)="redirectToInfos()" class="text-center infos" text="Plus d'infos ?"></Label>
+        </StackLayout>
+
+</StackLayout>

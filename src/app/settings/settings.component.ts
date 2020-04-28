@@ -8,6 +8,9 @@ import * as app from "tns-core-modules/application";
 })
 export class SettingsComponent implements OnInit {
 
+
+    textField
+
     constructor() {
         // Use the component constructor to inject providers.
     }
@@ -19,5 +22,9 @@ export class SettingsComponent implements OnInit {
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+    test() {
+
+
     }
 }

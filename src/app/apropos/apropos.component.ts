@@ -1,10 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
+import { ImageSource, fromBase64, fromFile } from "tns-core-modules/image-source";
+import { Image } from "tns-core-modules/ui/image";
 
 @Component({
     selector: "Apropos",
-    templateUrl: "./apropos.component.html"
+    templateUrl: "./apropos.component.html",
+    styleUrls: ["./apropos.component.css"]
+
 })
 export class AproposComponent implements OnInit {
 

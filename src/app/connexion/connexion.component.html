@@ -15,9 +15,13 @@
     <Label text="Connexion"></Label>
 </ActionBar>
 
-<StackLayout class='form'>
-    <TextField hint='email' keyboardType='email' autocorrect='false' autocapitalizationType="none" ></TextField>
-    <TextField hint="password" secure="true"></TextField>
-    <Button text="Se connecter"></Button>
-    <Button text="S'inscrire"></Button>
+<StackLayout class='bg-1' >
+    <StackLayout style="padding:30 30 0 30">
+        <Label class='h1 text-center' text="Histologe"></Label>
+        <Image style="width:200;height:200;" src="res://icon" stretch="aspectFill"></Image>
+        <TextField hint='email' keyboardType='email' autocorrect='false' autocapitalizationType="none" ></TextField>
+        <TextField hint="password" secure="true"></TextField>
+        <Button class='-primary -rounded-sm' text="Se connecter"></Button>
+        <Button class='-primary -rounded-sm' text="Mot de passe oublié ?" (tap)="forget()"></Button>
+    </StackLayout>
 </StackLayout>
