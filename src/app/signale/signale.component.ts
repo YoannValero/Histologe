@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { MyHttpPostService } from "../services/http-post.service";
 import { HttpClient } from "@angular/common/http";
 
 import { Switch } from "tns-core-modules/ui/switch";
+import { MyHttpPostService } from "../services/http-post.service";
+import { ValidateurService } from "../services/validateur.service";
 import { EventData } from "tns-core-modules/data/observable";
 
 // Caméra photo
@@ -28,6 +29,7 @@ import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/mod
 import { ViewContainerRef } from "@angular/core";
 import { ModalViewComponent } from "./modal-view";
 import { ViewChildren, QueryList } from '@angular/core';
+
 
 
 
@@ -64,21 +66,45 @@ export class SignaleComponent implements OnInit {
 
     public savedImage: any;
 
-    constructor(public http : HttpClient, public myPostService: MyHttpPostService, zone : NgZone, private cdRef:ChangeDetectorRef) {
+    constructor(public http : HttpClient, public myPostService: MyHttpPostService, zone : NgZone, private cdRef:ChangeDetectorRef, private validateur : ValidateurService) {
         // Use the component constructor to inject providers.
 
     }
 
     ngOnInit(): void {
         // Init your component properties here.
-        console.log("ngOnInit log du tableau criteres" + this.myPostService.signalement.criteres);
+        // console.log("ngOnInit log du tableau criteres" + this.myPostService.signalement.criteres);
         this.getList();
     }
 
     testLog() {
-        console.log("postService.sign.img : " + JSON.stringify(this.myPostService.signalement.img));
-        console.log("length tabelau img" +  this.myPostService.signalement.img.length);
-        console.log("log de this.images[] : " + JSON.stringify(this.images));
+        // console.log("postService.sign.img : " + JSON.stringify(this.myPostService.signalement.img));
+        // console.log("length tabelau img" +  this.myPostService.signalement.img.length);
+        // console.log("log de this.images[] : " + JSON.stringify(this.images));
+        // console.log("log de signalement", this.myPostService.signalement);
+        let sign = this.myPostService.signalement;
+
+
+        this.validateur.isAlpha(sign.habitant.nom, "Le nom n'est pas valide", "Nom");
+        this.validateur.isAlpha(sign.habitant.prenom, "Le prenom n'est pas valide", "Prénom");
+        let code = this.validateur.randomString(25);
+        console.log(code);
+
+        console.log("log de sign.habitant.email : ", sign.habitant.email);
+        console.log("log de sign.habitant.nom : ", sign.habitant.nom);
+        console.log("log de sign.habitant.prenom : ", sign.habitant.prenom);
+
+
+        this.validateur.isEmail(sign.habitant.email, "Votre email n'est pas valide");
+
+        if (this.validateur.isValid() == true) {
+            console.log("log de this.validateur.getErrors().length",this.validateur.getErrors().length );
+
+            console.log("log de validateur errors", this.validateur.errors);
+        }
+
+        let errors = this.validateur.getErrors();
+        alert(errors);
     }
 
     onDrawerButtonTap(): void {
@@ -102,20 +128,24 @@ export class SignaleComponent implements OnInit {
     nextStep() {
         // console.log(this.myPostService.signalement.descriptionProb)
     }
-
     /**
      * Soumission du formulaire
      */
     postSignalement() {
         // this.sign.push(this.myPostService.signalement);
         // console.log(this.sign);
-
+        if (!this.myPostService.signalement._id) {
+            this.myPostService.signalement._id = this.validateur.randomString(25);
+        }
+        this.upload();
         this.myPostService
             .postData(this.myPostService.signalement)
             .toPromise().then( (data) => {
                 console.log("Réponse du serveur : \n" + JSON.stringify(data));
+                alert(data);
             })
     }
+
     /**
      *  Déclenche Autorisation Caméra / déclenche la méthode de prise de photo
      * @param args
@@ -124,10 +154,10 @@ export class SignaleComponent implements OnInit {
         requestPermissions().then(
             () => this.capture(),
             () => alert("Vous devez autoriser l'accès à la caméra de votre smartphone pour permettre la prise de photos de vos signalements")
-        );
-    }
+            );
+        }
 
-    /**
+        /**
      * Permet de prendre une photo et de la stocker dans la variable de signalement dans http-post.service.ts
      */
     capture() {
@@ -235,25 +265,27 @@ export class SignaleComponent implements OnInit {
         };
 
         var params = [];
-        if (arrayImg.length > 1) {
+        // if (arrayImg.length > 1) {
             let counter = 0;
             arrayImg.forEach(i => {
                 params.push(
                     {
                         name:'image' + (++counter),
                         filename: i.android,
-                        mimeType:'image/jpeg'
+                        mimeType:'image/jpeg',
+                        idSituation : 1
                     }
                 );
             });
             let task = session.multipartUpload(params, request);
             this.handleProgress(task)
-        } else {
+        // } else {
             // A voir quelles données doivent être envoyées pour l'envoi d'une seule photo
             // ERROOR de response server
-            let task = session.uploadFile(arrayImg[0]._android, request);
-            this.handleProgress(task)
-        }
+            // La méthode multipartUpload fonctionne pour une seule photo
+            // let task = session.uploadFile(arrayImg[0]._android, request);
+            // this.handleProgress(task)
+        // }
     };
     /**
      * Méthode de suivi de l'évolution des Uploads vers serveur
@@ -413,19 +445,32 @@ export class SignaleComponent implements OnInit {
      */
     verifChecked(idCrit: number) {
         let criteres = this.myPostService.signalement.criteres;
-
-        if (criteres.indexOf(idCrit) !== -1  ) {
-            return true;
-        } else {
-            return false;
-        }
+            if (criteres.indexOf(idCrit) !== -1  ) {
+                return true;
+            } else {
+                return false;
+            }
     }
-
+    /**
+     *  Ecoute les changements des ListPicker
+     *  picker.items[picker.selectedIndex] == prop[picker.selectedIndex]
+     *  Le 1er choix permet de se passer du 2ème argument prop
+     * @param args
+     * @param prop
+     */
     public onSelectedIndexChanged(args: EventData, prop : any[]) {
-        const picker = <ListPicker>args.object;
-        console.log(`index: ${picker.selectedIndex}; item" ${prop[picker.selectedIndex]}`);
 
-        return prop[picker.selectedIndex];
+
+        const picker = <ListPicker>args.object;
+        console.log(`index: ${picker.selectedIndex}; item : ${prop[picker.selectedIndex]}`);
+        console.log("log de picker.items[picker.selectedIndex]", picker.items[picker.selectedIndex]); // + de 4..
+        if (prop == this.nbAdulte) {
+            this.myPostService.signalement.habitant_adulte == prop[picker.selectedIndex];
+            console.log("value à pusher dans signalement" ,prop[picker.selectedIndex]);
+        } else {
+            console.log("erf");
+        }
+
     }
 
     // public showModal(checklist) {

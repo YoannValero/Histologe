@@ -4,11 +4,13 @@
         ios.position="left">
     </ActionItem>
     <Label text="Accueil"></Label>
+
 </ActionBar>
 
 <StackLayout class="sign">
         <StackLayout id='test' style="height:200;" verticalAlignment="center" horizontalAlignment="center" >
-            <Label class="title text-center" textWrap="true" text="Locataire, un problème dans ton logement ? Signale ''TOIT'' !"></Label>
+            <Label class="title text-center" textWrap="true" text="Locataire, un problème dans ton logement ?"></Label>
+            <Label class="title text-center" textWrap="true" text='SIGNALE "TOIT"'></Label>
         </StackLayout>
 
         <StackLayout id='etapes' verticalAlignment="center" horizontalAlignment="center">
@@ -16,9 +18,9 @@
             <Label class='h3 etape' textWrap="true" text="2.  Vous renseignez les problèmes via notre formulaire de signalement."></Label>
             <Label class='h3 etape' textWrap="true" text="3.  HISTOLOGE vous accompagne pour trouver une solution."></Label>
         </StackLayout>
-
         <StackLayout style="background: lightgray;height:250;" verticalAlignment="center">
-            <Button id="signalBtn" (tap)="redirectToSignale()" class='fas'  text="Signaler un problème &#xf071;"></Button>
+            <Image class="tvElevation" (tap)="redirectToSignale(image1)" src='https://histologe.info/images/but_sign1.png' #image1 stretch="aspectFit"></Image>
+            <!-- <Button id="signalBtn" (tap)="redirectToSignale()" class='fas'  text="Signaler un problème &#xf071;"></Button> -->
             <Label (tap)="redirectToInfos()" class="text-center infos" text="Plus d'infos ?"></Label>
         </StackLayout>
 

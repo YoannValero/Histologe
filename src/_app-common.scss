@@ -1,18 +1,18 @@
 @import "~@nativescript/theme/core";
-@import "~@nativescript/theme/default";
+@import "~@nativescript/theme/orange";
 
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 
 ActionBar{
-    background: rgb(146, 144, 144);
+    background: rgb(201, 128, 69);
     Label {
         font-size:20;
         color:white;
     }
 }
 .user {
-    background: rgb(146, 144, 144);
+    background: rgb(201, 128, 69);
     height:200;
     width:100%;
     .idt {

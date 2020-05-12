@@ -42,7 +42,7 @@
                                     <StackLayout style='margin-top:65' class='hr'></StackLayout>
                                 </GridLayout>
 
-                        <Label class='title' textWrap='true' text='Problème que vous avez sélectionné'></Label>
+                        <Label class='title' textWrap='true' text='Problèmes sélectionnés'></Label>
                         <StackLayout class='hr'></StackLayout>
                             <Label textWrap='true' style='color:rgb(102,102,102);' class="navItem font-weight-bold fas" *ngFor="let item of arrayCriteresChecked" [text]="'- &#xf071; ' + item"></Label>
                         <StackLayout class='hr'></StackLayout>
@@ -50,7 +50,8 @@
                         <Label class='quest' textWrap='true' text='Décrivez le ou les problèmes rencontrés'></Label>
                         <TextView [(ngModel)]="myPostService.signalement.descriptionProb"  lineHeight="300" hint ="description des problèmes..."></TextView>
 
-                        <Label class='title' textWrap='true' text='Prendre ou télécharger des photos des problèmes (6 fichiers maximum)*'></Label>
+                        <Label class='title' textWrap='true' text='Prendre ou télécharger des photos des problèmes'></Label>
+                        <Label class='small' textWrap='true' text='(6 photos/fichiers maximum)*'></Label>
                         <Button class='-primary' text="console.log" (tap)="testLog()"></Button>
 
                         <FlexBoxLayout class='test' flexDirection="row">
@@ -58,7 +59,7 @@
                             <Button class='situationBtn -primary fal' text="&#xf093;" (tap)="selectPicture() "></Button>
                         </FlexBoxLayout>
 
-                        <Button class='-primary' text="Upload fichier" (tap)="upload() "></Button>
+                        <!-- <Button class='-primary' text="Upload fichier" (tap)="upload() "></Button> -->
                         <Image style="width:250;height:250" *ngFor="let item of myPostService.signalement.img" [src]="item" stretch="aspectFit" margin="10"></Image>
                         <Image style="width:250;height:250" *ngFor="let item of images" [src]="item" stretch="aspectFit" margin="10"></Image>
 
@@ -74,7 +75,7 @@
                     <StackLayout class='section'>
                         <Label class='text-center title' text="Informations Complémentaires"></Label>
                         <Label class='quest' textWrap='true' text="Avez vous informé le propriétaire de ces nuisances ?*"></Label>
-                        <Switch [(ngModel)]="myPostService.signalement.proprietaire_informe"></Switch>
+                        <!-- <Switch [(ngModel)]="myPostService.signalement.proprietaire_informe"></Switch> -->
                         <RadioGroup class='text-center' style='padding-left:30;'>
                             <RadioButton class='radioBtn' style='font-size:20;' text="Oui"></RadioButton>
                             <RadioButton class='radioBtn' style='font-size:20;' text="Non"></RadioButton>
@@ -103,7 +104,7 @@
                         <TextField keyboardType='number' hint='50' [(ngModel)]="myPostService.signalement.surface_logement"></TextField> -->
 
                         <Label class='title' text='Votre nom et prénom*'></Label>
-                        <TextField [(ngModel)]="myPostService.signalement.habitant.nom" hint='Nom'></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.nom" hint='Nom' maxLength="2"></TextField>
                         <TextField [(ngModel)]="myPostService.signalement.habitant.prenom" hint='Prenom'></TextField>
                         <Label class='title' text='Votre adresse courriel*'></Label>
 
@@ -113,7 +114,7 @@
                         <TextField [(ngModel)]="myPostService.signalement.habitant.tel" keyboardType='phone' hint='0618786475'></TextField>
 
                         <Label class='title' text='Adresse du logement'></Label>
-                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.numero" keyboardType='number' hint='10'></TextField>
+                        <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.numero" keyboardType='number' hint='10' maxLength="200"></TextField>
                         <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.rue" hint='Rue, Chemin, Place'></TextField>
                         <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.etage" hint='Etage' ></TextField>
                         <TextField [(ngModel)]="myPostService.signalement.habitant.adresse.num_appart" keyboardType='number' hint='Code Postal'></TextField>
@@ -127,11 +128,13 @@
             <!-- ################# 3ème partie du formulaire ##################### -->
             <TabContentItem class='sign'>
                 <StackLayout class='section'>
-                    <Label class='quest' text="J'ai bien pris connaissance des CGU"></Label>
-                    <Switch></Switch>
-                    <Label class='quest' textWrap="true" text="Pour finaliser votre signalement veuillez cliquez sur Envoyer"></Label>
+                    <FlexBoxLayout justifyContent='space-around' alignItems='center'>
+                        <Label style="width:250;" textWrap='true' class='quest pull-left' text="J'ai bien pris connaissance des CGU"></Label>
+                        <Switch></Switch>
+                    </FlexBoxLayout>
+                    <Label class='quest' style='margin-top:50;' textWrap="true" text="Pour finaliser votre signalement veuillez cliquer sur Envoyer"></Label>
                     <Button (tap)='postSignalement()' text='Envoyer' class='-primary'></Button>
-            </StackLayout>
+                </StackLayout>
             </TabContentItem>
         </Tabs>
 </ScrollView>

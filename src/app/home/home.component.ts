@@ -23,7 +23,9 @@ export class HomeComponent implements OnInit {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
-    redirectToSignale() {
+    redirectToSignale(a) {
+        a.className = "";
+        a.className = "highlighted"
         this.router.navigate(['/signale']);
     }
     redirectToInfos() {

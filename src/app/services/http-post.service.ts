@@ -4,7 +4,6 @@ import { ModelSignal } from "../modeles/SignalInterface" ;
 import { ContactModel } from "../modeles/ContactModel";
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 
-
 @Injectable()
 export class MyHttpPostService {
 
@@ -21,7 +20,7 @@ export class MyHttpPostService {
         console.log("log de mes données que j'envoie au serveur \n" + JSON.stringify(postData));
 
         let options = this.createRequestOptions();
-        return this.http.post("https://www.histologe.info/dev/_mob/getSign.php", { postData}, { headers: options });
+        return this.http.post("https://www.histologe.info/dev/_mob/getSign.php", { postData }, { headers: options });
     }
 
     private createRequestOptions() {
@@ -50,7 +49,7 @@ export class MyHttpPostService {
     }
     /**
      * Récupère la liste des critères en fonction de la situation sélectionnée
-     * @param idSituation 
+     * @param idSituation
      */
     getCritere(idSituation :number)  {
         let headers = this.createRequestHeaderGet();
